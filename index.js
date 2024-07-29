@@ -46,10 +46,7 @@ app.post('/', async (req, res) => {
     res.send(new_user);
 });
 
-app.get('/', async (req, res) => {
-    const users = await modules.collections.find();
-    await res.status(200).json(users);
-});
+
 
 app.delete('/', async (req, res) => {
     const user = await modules.collections.findByIdAndDelete(req.body.id);
