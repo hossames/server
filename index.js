@@ -24,7 +24,7 @@ app.use(express.json({limit:'50mb'}));
 
 app.use(express.urlencoded({ extended: false }));
 
-app.post('/upload',upload.single(),async (req, res) => {
+app.post('/api/upload',upload.single(),async (req, res) => {
     try {
         const result = await cloudinary.uploader.upload_large(req.body.image,{
             folder: '',
@@ -36,38 +36,38 @@ app.post('/upload',upload.single(),async (req, res) => {
     }
 })
 
-app.get('/upload', async (req, res) => {
+app.get('/api/upload', async (req, res) => {
     res.send('shit');
 })
 
-app.post('/', async (req, res) => {
+app.post('/api', async (req, res) => {
     const user = await new modules.collections(req.body);
     new_user = await user.save();
     res.send(new_user);
 });
 
-app.get('/', async (req, res) => {
+app.get('/api', async (req, res) => {
     const users = await modules.collections.find();
     await res.status(200).json(users);
 });
 
-app.delete('/', async (req, res) => {
+app.delete('/api', async (req, res) => {
     const user = await modules.collections.findByIdAndDelete(req.body.id);
     res.send(user);
 })
 
-app.get('/product', async (req, res) => {
+app.get('/api/product', async (req, res) => {
     const users = await modules.products.find();
     await res.status(200).json(users);
 });
 
-app.post('/product', async (req, res) => {
+app.post('/api/product', async (req, res) => {
     const user = await new modules.products(req.body);
     new_user = await user.save();
     res.send(new_user);
 });
 
-app.delete('/product', async (req, res) => {
+app.delete('/api/product', async (req, res) => {
     const user = await modules.products.findByIdAndDelete(req.body.id);
     res.send(user);
 })
